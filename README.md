@@ -32,7 +32,8 @@ STEP2️⃣ Clone This Repository
 
 git clone https://github.com/CortisXX/Pathology-research.git
 cd Pathology-research
-3️⃣ Run the App
+
+STEP3️⃣ Run the App
 shiny::runApp("machine learining app.Rmd")
 
 
