@@ -37,6 +37,8 @@ STEP3️⃣ Run the App
 shiny::runApp("machine learining app.Rmd")
 
 
+---
+## 📌 Enjoy！
 Now, you can upload your CSV and start exploring pathology data! 
 
 🧪 Example Dataset
@@ -53,6 +55,8 @@ Group, Age, Diagnosis, Biomarker_A, Biomarker_B, time, event
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/ca9dab58-4084-4d5a-8267-5ab9121da0b3" />
 
 
+---
+
 🤝 Contributing
 We welcome contributions! Follow these steps to contribute:
 
@@ -60,6 +64,9 @@ Fork this repository.
 Create a new branch (git checkout -b feature-name).
 Commit your changes (git commit -m "Added new feature").
 Push and create a Pull Request.
+
+
+---
 📜 License
 This project is licensed under the MIT License – free to use, modify, and distribute.
 
@@ -69,4 +76,6 @@ This project is licensed under the MIT License – free to use, modify, and dist
 🐦 Twitter:(https://x.com/xiaozhoumc)
 🔗 GitHub: CortisXX
 
-⭐ If you find this project useful, please give us a STAR! ⭐
+
+---
+⭐ If you find this project useful, please give us a STAR! Thank you⭐
