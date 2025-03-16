@@ -1,0 +1,355 @@
+# 加载所有需要的包
+library(shiny)
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+library(survival)
+library(DT)
+library(rmarkdown)
+library(kableExtra)
+library(randomForest)
+
+# 定义 UI
+ui <- fluidPage(
+  titlePanel("Statistical Analysis App"),
+  sidebarLayout(
+    sidebarPanel(
+      fileInput("file", "Upload CSV File", accept = ".csv")
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("Data", DT::dataTableOutput("data_table")),
+        tabPanel("Descriptive Statistics", tableOutput("desc_stats")),
+        tabPanel("Group Comparisons", tableOutput("group_comparisons")),
+        tabPanel("Logistic Regression", verbatimTextOutput("logit_summary")),
+        tabPanel("Survival Analysis", plotOutput("surv_plot"), verbatimTextOutput("surv_test")),
+        tabPanel("Machine Learning", verbatimTextOutput("rf_summary")),
+        tabPanel("Visualizations",
+                 selectInput("bar_var", "Select Variable for Bar Chart", choices = NULL),
+                 plotOutput("bar_chart"),
+                 plotOutput("box_plots")
+        ),
+        tabPanel("Report", downloadButton("report", "Generate Report"))
+      )
+    )
+  )
+)
+
+# 定义 Server 逻辑
+server <- function(input, output, session) {
+  # 响应式数据上传
+  data <- reactive({
+    req(input$file)
+    df <- read.csv(input$file$datapath, header = TRUE)
+    df[[1]] <- as.factor(df[[1]]) # 将第一列转换为因子
+    df
+  })
+  
+  # 分组数量
+  n_groups <- reactive({
+    length(unique(data()[[1]]))
+  })
+  
+  # 更新条形图变量的选择
+  observe({
+    updateSelectInput(session, "bar_var", choices = names(data())[-1])
+  })
+  
+  # 描述性统计
+  desc_stats <- reactive({
+    data() %>%
+      group_by(.data[[names(data())[1]]]) %>%
+      summarise(across(where(is.numeric), list(mean = mean, sd = sd, median = median), na.rm = TRUE))
+  })
+  
+  # 双组 t 检验
+  t_test_results <- reactive({
+    if (n_groups() == 2) {
+      vars <- names(data())[-1]
+      results <- lapply(vars, function(var) {
+        if (is.numeric(data()[[var]])) {
+          t.test(data()[[var]] ~ data()[[1]])
+        } else {
+          NULL
+        }
+      })
+      names(results) <- vars
+      results
+    } else {
+      NULL
+    }
+  })
+  
+  # 三组以上 ANOVA
+  anova_results <- reactive({
+    if (n_groups() > 2) {
+      vars <- names(data())[-1]
+      results <- lapply(vars, function(var) {
+        if (is.numeric(data()[[var]])) {
+          aov(data()[[var]] ~ data()[[1]])
+        } else {
+          NULL
+        }
+      })
+      names(results) <- vars
+      results
+    } else {
+      NULL
+    }
+  })
+  
+  # 逻辑回归（仅限双组）
+  logit_model <- reactive({
+    if (n_groups() == 2) {
+      formula <- as.formula(paste0(names(data())[1], " ~ ."))
+      glm(formula, data = data(), family = binomial)
+    } else {
+      NULL
+    }
+  })
+  
+  # 随机森林（仅限双组）
+  rf_model <- reactive({
+    if (n_groups() == 2) {
+      formula <- as.formula(paste0(names(data())[1], " ~ ."))
+      randomForest(formula, data = data(), ntree = 100)
+    } else {
+      NULL
+    }
+  })
+  
+  # 生存分析（需包含 time 和 event 列）
+  surv_analysis <- reactive({
+    if ("time" %in% names(data()) && "event" %in% names(data())) {
+      surv_obj <- Surv(data()$time, data()$event)
+      fit <- survfit(surv_obj ~ data()[[1]])
+      test <- survdiff(surv_obj ~ data()[[1]])
+      list(fit = fit, test = test)
+    } else {
+      NULL
+    }
+  })
+  
+  # 数据表格输出
+  output$data_table <- DT::renderDataTable({
+    data()
+  }, options = list(pageLength = 10))
+  
+  # 描述性统计输出
+  output$desc_stats <- renderTable({
+    desc_stats()
+  })
+  
+  # 组间比较输出
+  output$group_comparisons <- renderTable({
+    if (n_groups() == 2) {
+      p_values <- sapply(t_test_results(), function(x) if (!is.null(x)) x$p.value else NA)
+      data.frame(Variable = names(p_values), P_Value = p_values)
+    } else if (n_groups() > 2) {
+      p_values <- sapply(anova_results(), function(x) if (!is.null(x)) summary(x)[[1]][["Pr(>F)"]][1] else NA)
+      data.frame(Variable = names(p_values), P_Value = p_values)
+    } else {
+      NULL
+    }
+  })
+  
+  # 逻辑回归输出
+  output$logit_summary <- renderPrint({
+    if (!is.null(logit_model())) {
+      summary(logit_model())
+    } else {
+      "Logistic regression not applicable (requires 2 groups)."
+    }
+  })
+  
+  # 随机森林输出
+  output$rf_summary <- renderPrint({
+    if (!is.null(rf_model())) {
+      rf_model()
+    } else {
+      "Random forest not applicable (requires 2 groups)."
+    }
+  })
+  
+  # 生存分析图
+  output$surv_plot <- renderPlot({
+    if (!is.null(surv_analysis())) {
+      plot(surv_analysis()$fit, col = 1:n_groups(), lty = 1, main = "Survival Curves by Group")
+      legend("topright", legend = levels(data()[[1]]), col = 1:n_groups(), lty = 1)
+    }
+  })
+  
+  # 生存分析检验输出
+  output$surv_test <- renderPrint({
+    if (!is.null(surv_analysis())) {
+      surv_analysis()$test
+    } else {
+      "Survival analysis not applicable (requires 'time' and 'event' columns)."
+    }
+  })
+  
+  # 箱线图
+  output$box_plots <- renderPlot({
+    vars <- names(data())[-1]
+    plots <- lapply(vars, function(var) {
+      if (is.numeric(data()[[var]])) {
+        ggplot(data(), aes(x = .data[[names(data())[1]]], y = .data[[var]], fill = .data[[names(data())[1]]])) +
+          geom_boxplot() +
+          labs(title = paste("Box Plot of", var), x = "Group", y = var) +
+          theme_minimal()
+      } else {
+        NULL
+      }
+    })
+    plots <- Filter(Negate(is.null), plots)
+    do.call(grid.arrange, c(plots, ncol = min(2, length(plots))))
+  })
+  
+  # 基于选中行的交互式条形图
+  selected_data <- reactive({
+    if (length(input$data_table_rows_selected) > 0) {
+      data()[input$data_table_rows_selected, ]
+    } else {
+      data()
+    }
+  })
+  
+  output$bar_chart <- renderPlot({
+    req(input$bar_var)
+    df <- selected_data()
+    if (is.numeric(df[[input$bar_var]])) {
+      ggplot(df, aes(x = .data[[names(data())[1]]], y = .data[[input$bar_var]], fill = .data[[names(data())[1]]])) +
+        stat_summary(fun = mean, geom = "bar") +
+        stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+        labs(title = paste("Mean", input$bar_var, "by Group"), x = "Group", y = paste("Mean", input$bar_var)) +
+        theme_minimal()
+    }
+  })
+  
+  # 报告生成
+  output$report <- downloadHandler(
+    filename = "analysis_report.html",
+    content = function(file) {
+      temp_report <- file.path(tempdir(), "report.Rmd")
+      # 将 Rmd 内容写入临时文件
+      writeLines(c(
+        "---",
+        "title: \"Statistical Analysis Report\"",
+        "output: html_document",
+        "params:",
+        "  data: !r NULL",
+        "  desc_stats: !r NULL",
+        "  t_test_results: !r NULL",
+        "  anova_results: !r NULL",
+        "  logit_model: !r NULL",
+        "  rf_model: !r NULL",
+        "  surv_analysis: !r NULL",
+        "---",
+        "",
+        "```{r setup, include=FALSE}",
+        "knitr::opts_chunk$set(echo = FALSE)",
+        "library(dplyr)",
+        "library(kableExtra)",
+        "library(ggplot2)",
+        "library(gridExtra)",
+        "library(survival)",
+        "```",
+        "",
+        "## Data Summary",
+        "First `r nrow(params$data)` rows of the uploaded data:",
+        "",
+        "```{r}",
+        "kable(head(params$data)) %>%",
+        "  kable_styling(bootstrap_options = c(\"striped\", \"hover\"))",
+        "```",
+        "",
+        "## Descriptive Statistics",
+        "```{r}",
+        "kable(params$desc_stats) %>%",
+        "  kable_styling(bootstrap_options = c(\"striped\", \"hover\"))",
+        "```",
+        "",
+        "## Group Comparisons",
+        "```{r}",
+        "n_groups <- length(unique(params$data[[1]]))",
+        "if (n_groups == 2 && !is.null(params$t_test_results)) {",
+        "  p_values <- sapply(params$t_test_results, function(x) if (!is.null(x)) x$p.value else NA)",
+        "  df <- data.frame(Variable = names(p_values), P_Value = p_values)",
+        "  kable(df) %>%",
+        "    kable_styling(bootstrap_options = c(\"striped\", \"hover\")) %>%",
+        "    column_spec(2, background = ifelse(df$P_Value < 0.01, \"red\", ifelse(df$P_Value < 0.05, \"yellow\", \"white\")))",
+        "} else if (n_groups > 2 && !is.null(params$anova_results)) {",
+        "  p_values <- sapply(params$anova_results, function(x) if (!is.null(x)) summary(x)[[1]][[\"Pr(>F)\"]][1] else NA)",
+        "  df <- data.frame(Variable = names(p_values), P_Value = p_values)",
+        "  kable(df) %>%",
+        "    kable_styling(bootstrap_options = c(\"striped\", \"hover\")) %>%",
+        "    column_spec(2, background = ifelse(df$P_Value < 0.01, \"red\", ifelse(df$P_Value < 0.05, \"yellow\", \"white\")))",
+        "} else {",
+        "  \"No group comparisons applicable.\"",
+        "}",
+        "```",
+        "",
+        "## Logistic Regression",
+        "```{r}",
+        "if (!is.null(params$logit_model)) {",
+        "  summary(params$logit_model)",
+        "} else {",
+        "  \"Logistic regression not applicable (requires 2 groups).\"",
+        "}",
+        "```",
+        "",
+        "## Random Forest",
+        "```{r}",
+        "if (!is.null(params$rf_model)) {",
+        "  print(params$rf_model)",
+        "} else {",
+        "  \"Random forest not applicable (requires 2 groups).\"",
+        "}",
+        "```",
+        "",
+        "## Survival Analysis",
+        "```{r}",
+        "if (!is.null(params$surv_analysis)) {",
+        "  plot(params$surv_analysis$fit, col = 1:n_groups, lty = 1, main = \"Survival Curves by Group\")",
+        "  legend(\"topright\", legend = levels(params$data[[1]]), col = 1:n_groups, lty = 1)",
+        "  print(params$surv_analysis$test)",
+        "} else {",
+        "  \"Survival analysis not applicable (requires 'time' and 'event' columns).\"",
+        "}",
+        "```",
+        "",
+        "## Visualizations",
+        "### Box Plots",
+        "```{r, fig.width=10, fig.height=8}",
+        "vars <- names(params$data)[-1]",
+        "plots <- lapply(vars, function(var) {",
+        "  if (is.numeric(params$data[[var]])) {",
+        "    ggplot(params$data, aes(x = .data[[names(params$data)[1]]], y = .data[[var]], fill = .data[[names(params$data)[1]]])) +",
+        "      geom_boxplot() +",
+        "      labs(title = paste(\"Box Plot of\", var), x = \"Group\", y = var) +",
+        "      theme_minimal()",
+        "  } else {",
+        "    NULL",
+        "  }",
+        "})",
+        "plots <- Filter(Negate(is.null), plots)",
+        "do.call(grid.arrange, c(plots, ncol = min(2, length(plots))))",
+        "```"
+      ), temp_report)
+      # 渲染报告
+      params <- list(
+        data = data(),
+        desc_stats = desc_stats(),
+        t_test_results = t_test_results(),
+        anova_results = anova_results(),
+        logit_model = logit_model(),
+        rf_model = rf_model(),
+        surv_analysis = surv_analysis()
+      )
+      rmarkdown::render(temp_report, output_file = file, params = params, envir = new.env(parent = globalenv()))
+    }
+  )
+}
+
+# 运行 Shiny App
+shinyApp(ui = ui, server = server)
