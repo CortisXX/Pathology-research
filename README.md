@@ -1,5 +1,5 @@
 # Pathology-research
-This study presents an AI-powered pathological data analysis platform designed to assist pathologists, researchers, and clinicians by offering automated data analysis, intelligent modeling, and interactive visualization.
+This study presents an R-powered pathological data analysis platform designed to assist pathologists, researchers, and clinicians by offering automated data analysis, intelligent modeling, and interactive visualization.
 # 🏥 Pathology Research App - R-Powered Pathology Data Analysis 📊🔬
 
 🚀 **An R-powered machine learning tool for automated pathology data analysis.**  
