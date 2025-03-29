@@ -39,9 +39,10 @@ shiny::runApp("machine learining app.Rmd")
 
 ---
 ## 📌 Enjoy！
-![rearchapp-filmage-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/f8d676a6-8eca-418a-8c08-99cdcca16284)
+
 
 Now, you can upload your CSV and start exploring pathology data! 
+![rearchapp-filmage1-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/750227d0-e1f8-4746-a9f6-0f71e863ce28)
 
 🧪 Example Dataset
 Group, Age, Diagnosis, Biomarker_A, Biomarker_B, time, event
