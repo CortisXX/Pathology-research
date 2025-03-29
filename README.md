@@ -39,6 +39,8 @@ shiny::runApp("machine learining app.Rmd")
 
 ---
 ## 📌 Enjoy！
+![rearchapp-filmage-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/f8d676a6-8eca-418a-8c08-99cdcca16284)
+
 Now, you can upload your CSV and start exploring pathology data! 
 
 🧪 Example Dataset
