@@ -58,8 +58,8 @@ Group, Age, Diagnosis, Biomarker_A, Biomarker_B, time, event
 <img width="892" alt="image" src="https://github.com/user-attachments/assets/7bb4df33-0147-417d-8031-26736d990bf4" />
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/ca9dab58-4084-4d5a-8267-5ab9121da0b3" />
 <img width="585" alt="image" src="https://github.com/user-attachments/assets/e4e1f595-29f5-42a5-bb11-243bf2309c36" />
-<img width="915" alt="image" src="https://github.com/user-attachments/assets/b4dc1efa-1767-4a44-aaec-bb4a1a3b1e4e" />
-<img width="915" alt="image" src="https://github.com/user-attachments/assets/a93628c2-19b4-467c-8d47-4b449172cfda" />
+<img width="590" alt="image" src="https://github.com/user-attachments/assets/4b99c508-1662-416f-a85f-ad0961874bfa" />
+
 
 ---
 
