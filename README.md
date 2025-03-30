@@ -9,6 +9,7 @@ This study presents an R-powered pathological data analysis platform designed to
 ![GitHub Forks](https://img.shields.io/github/forks/CortisXX/Pathology-research?style=social)
 ![GitHub License](https://img.shields.io/github/license/CortisXX/Pathology-research)
 
+
 ---
 
 ## 🌟 Features
@@ -56,7 +57,7 @@ Group, Age, Diagnosis, Biomarker_A, Biomarker_B, time, event
 <img width="930" alt="image" src="https://github.com/user-attachments/assets/b1314bf5-7dd5-4639-855a-bbb88f2d72eb" />
 <img width="892" alt="image" src="https://github.com/user-attachments/assets/7bb4df33-0147-417d-8031-26736d990bf4" />
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/ca9dab58-4084-4d5a-8267-5ab9121da0b3" />
-<img width="915" alt="image" src="https://github.com/user-attachments/assets/998afc5d-2400-418b-b61b-9c7cb7a8e9f6" />
+<img width="585" alt="image" src="https://github.com/user-attachments/assets/e4e1f595-29f5-42a5-bb11-243bf2309c36" />
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/b4dc1efa-1767-4a44-aaec-bb4a1a3b1e4e" />
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/a93628c2-19b4-467c-8d47-4b449172cfda" />
 
