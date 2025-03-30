@@ -52,17 +52,13 @@ Group, Age, Diagnosis, Biomarker_A, Biomarker_B, time, event
 <img width="893" alt="image" src="https://github.com/user-attachments/assets/79a3c617-38fa-48be-8278-aaca910b9841" />
 
 🖼️ report samples
-
-Test No.1️⃣ 
 <img width="897" alt="image" src="https://github.com/user-attachments/assets/324675fc-996e-466e-a271-f9e9f2440ea3" />
 <img width="930" alt="image" src="https://github.com/user-attachments/assets/b1314bf5-7dd5-4639-855a-bbb88f2d72eb" />
 <img width="892" alt="image" src="https://github.com/user-attachments/assets/7bb4df33-0147-417d-8031-26736d990bf4" />
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/ca9dab58-4084-4d5a-8267-5ab9121da0b3" />
-
-Test No.2️⃣
-![image](https://github.com/user-attachments/assets/998afc5d-2400-418b-b61b-9c7cb7a8e9f6)
-![image](https://github.com/user-attachments/assets/b4dc1efa-1767-4a44-aaec-bb4a1a3b1e4e)
-![image](https://github.com/user-attachments/assets/a93628c2-19b4-467c-8d47-4b449172cfda)
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/998afc5d-2400-418b-b61b-9c7cb7a8e9f6" />
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/b4dc1efa-1767-4a44-aaec-bb4a1a3b1e4e" />
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/a93628c2-19b4-467c-8d47-4b449172cfda" />
 
 ---
 
