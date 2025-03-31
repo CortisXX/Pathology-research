@@ -13,7 +13,7 @@ This study presents an R-powered pathological data analysis platform designed to
 ---
 
 ## 🌟 Features
-✔ **Automated Statistical Analysis** – Upload data, and get results/report instantly.  
+✔ **Automated Statistical Analysis** – Upload your data and get results/reports instantly.  
 ✔ **Machine Learning for Disease Classification** – Logistic Regression & Random Forest Models.  
 ✔ **Interactive Data Visualization** – Boxplots, Bar Charts, and more.  
 ✔ **Built in R** – Easy to use and open-source.  
