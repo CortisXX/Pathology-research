@@ -78,8 +78,6 @@ This project is licensed under the MIT License – free to use, modify, and dist
 
 🌍 Connect with Us!
 💡 Got questions? Want to collaborate? Connect with us:
-📧 Email: xiaozhoumc
-🐦 Twitter:(https://x.com/xiaozhoumc)
 🔗 GitHub: CortisXX
 
 
