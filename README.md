@@ -17,7 +17,7 @@ This study presents an R-powered pathological data analysis platform designed to
 ✔ **Machine Learning for Disease Classification** – Logistic Regression & Random Forest Models.  
 ✔ **Interactive Data Visualization** – Boxplots, Bar Charts, and more.  
 ✔ **Built in R** – Easy to use and open-source.  
-✔ (future plan) **AI-Powered Abstract/Paper Generation** – Automatically highlights p-values and key insights.  
+✔ (ongoing) **AI-Powered Real-Time Literature Interpretation** – Automatically highlights p-values and key insights.  
 
 ---
 
