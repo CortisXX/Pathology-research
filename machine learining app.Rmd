@@ -1,4 +1,4 @@
-# 加载所有需要的包
+# Load all required packages
 library(shiny)
 library(dplyr)
 library(ggplot2)
@@ -9,7 +9,7 @@ library(rmarkdown)
 library(kableExtra)
 library(randomForest)
 
-# 定义 UI
+# Define UI
 ui <- fluidPage(
   titlePanel("Statistical Analysis App"),
   sidebarLayout(
@@ -18,24 +18,24 @@ ui <- fluidPage(
     ),
     mainPanel(
       tabsetPanel(
-        tabPanel("Data", DT::dataTableOutput("data_table")),
+        tabPanel("Data", DT::dataTableOutput("data_table"),
+        h3("Visualizations"),
+      selectInput("bar_var", "Select Variable for Bar Chart", choices = NULL),
+                 plotOutput("bar_chart"),
+                 plotOutput("box_plots")
+      ),
         tabPanel("Descriptive Statistics", tableOutput("desc_stats")),
         tabPanel("Group Comparisons", tableOutput("group_comparisons")),
         tabPanel("Logistic Regression", verbatimTextOutput("logit_summary")),
         tabPanel("Survival Analysis", plotOutput("surv_plot"), verbatimTextOutput("surv_test")),
         tabPanel("Machine Learning", verbatimTextOutput("rf_summary")),
-        tabPanel("Visualizations",
-                 selectInput("bar_var", "Select Variable for Bar Chart", choices = NULL),
-                 plotOutput("bar_chart"),
-                 plotOutput("box_plots")
-        ),
         tabPanel("Report", downloadButton("report", "Generate Report"))
       )
     )
   )
 )
 
-# 定义 Server 逻辑
+# Define Server logic
 server <- function(input, output, session) {
   # 响应式数据上传
   data <- reactive({
@@ -351,5 +351,5 @@ server <- function(input, output, session) {
   )
 }
 
-# 运行 Shiny App
+# Run Shiny App
 shinyApp(ui = ui, server = server)
