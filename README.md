@@ -1,8 +1,8 @@
-# Pathology-research
+# clinical-research
 This study presents an R-powered pathological data analysis platform designed to assist pathologists, researchers, and clinicians by offering automated data analysis, intelligent modeling, and interactive visualization.
-# 🔬 Pathology Research App - R-Powered Pathology Data Analysis 📊
+# 🔬 OneClickStats App - R-Powered clinical Data Analysis 📊
 
-🚀 **An R-powered machine learning tool for automated pathology data analysis.**  
+🚀 **An R-powered machine learning tool for automated clinical data analysis.**  
 🔬 Upload your **CSV file**, get instant **statistical insights & disease classification** results!  
 
 ![GitHub Repo Stars](https://img.shields.io/github/stars/CortisXX/Pathology-research?style=social)
@@ -45,7 +45,7 @@ https://chatgpt.com/g/g-680308b48a2c8191a13a6375e08dfbda-aimedinsight
 ## 📌 Enjoy！
 
 
-Now, you can upload your CSV and start exploring pathology data! 
+Now, you can upload your CSV and start exploring clinical data! 
 ![rearchapp-filmage1-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/750227d0-e1f8-4746-a9f6-0f71e863ce28)
 
 🧪 Example Dataset
