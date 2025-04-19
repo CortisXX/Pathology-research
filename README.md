@@ -17,7 +17,7 @@ This study presents an R-powered pathological data analysis platform designed to
 ✔ **Machine Learning for Disease Classification** – Logistic Regression & Random Forest Models.  
 ✔ **Interactive Data Visualization** – Boxplots, Bar Charts, and more.  
 ✔ **Built in R** – Easy to use and open-source.  
-✔ (ongoing) **AI-Powered Real-Time Literature Interpretation** – Automatically highlights p-values and key insights.  
+✔ **AI-Powered Real-Time Literature Interpretation** – Automatically highlights p-values and key insights.  
 
 ---
 
@@ -36,6 +36,9 @@ cd Pathology-research
 
 STEP3️⃣ Run the App
 shiny::runApp("machine learining app.Rmd")
+
+STEP ⭐ AI-Powered Real-Time Literature Interpretation
+https://chatgpt.com/g/g-680308b48a2c8191a13a6375e08dfbda-aimedinsight
 
 
 ---
