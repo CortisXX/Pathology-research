@@ -1,4 +1,4 @@
-# clinical-research
+# Clinical-research
 This study presents an R-powered pathological data analysis platform designed to assist pathologists, researchers, and clinicians by offering automated data analysis, intelligent modeling, and interactive visualization.
 # 🔬 OneClickStats App - R-Powered clinical Data Analysis 📊
 
