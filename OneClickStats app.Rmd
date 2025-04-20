@@ -11,7 +11,7 @@ library(randomForest)
 
 # 定义 UI
 ui <- fluidPage(
-  titlePanel("Statistical Analysis App"),
+  titlePanel("OneClickStats App"),
   sidebarLayout(
     sidebarPanel(
       fileInput("file", "Upload CSV File", accept = ".csv")
