@@ -27,6 +27,8 @@ Apr 12, released to PAP meeting
 Apr 18, 2025 LLM asisted tool: "AiMedinSight" released to GPT store
 
 Apr 19, 2025 Our app has a name: OneClickStats
+        released to a pathology group
+        added more interaction to the visualization
 
 ---
 ## 📌 Installation & Usage
