@@ -20,7 +20,15 @@ This study presents an R-powered pathological data analysis platform designed to
 ✔ **AI-Powered Real-Time Literature Interpretation** – Automatically highlights p-values and key insights.  
 
 ---
+## Updates
 
+Apr 12, released to PAP meeting
+
+Apr 18, 2025 LLM asisted tool: "AiMedinSight" released to GPT store
+
+Apr 19, 2025 Our app has a name: OneClickStats
+
+---
 ## 📌 Installation & Usage
 STEP1️⃣ Prerequisites**
 Ensure you have R installed. If not, download it from [CRAN](https://cran.r-project.org/).  
